@@ -49,8 +49,14 @@ button { cursor: pointer; }
 
 /* ─── Top bar: burgundy band with an angled end ───────────────────── */
 .topbar { position: relative; height: 76px; padding: 0 var(--pad); display: flex; align-items: center; justify-content: space-between; }
-.topbar::before { content: ''; position: absolute; inset: 0 clamp(150px, 28vw, 420px) 0 0; background: var(--brand); clip-path: polygon(0 0, 100% 0, calc(100% - 52px) 100%, 0 100%); }
-.brand, .header-meta { position: relative; }
+.topbar { --tab-top: 18px; background: var(--brand); overflow: hidden; }
+/* Light tab rising from the bottom right: rounded top corner, slanted edge, flared foot */
+.topbar::after {
+  content: ''; position: absolute; top: var(--tab-top); right: 0; bottom: 0; width: calc(clamp(150px, 28vw, 420px) + 52px);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='58' viewBox='0 0 600 58'%3E%3Cpath d='M0 58Q10 58 14 52L46 8Q51 0 62 0H600V58Z' fill='%23faf7f9'/%3E%3C/svg%3E") left bottom / auto 100% no-repeat;
+}
+.brand, .header-meta { position: relative; z-index: 1; }
+.header-meta { margin-top: var(--tab-top); }
 .brand img { display: block; height: 32px; width: auto; }
 .header-meta { font-size: 13px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
 .header-meta .sep { color: var(--line); margin: 0 6px; }
@@ -181,7 +187,8 @@ button { cursor: pointer; }
 }
 @media (max-width: 600px) {
   .topbar { height: 64px; }
-  .topbar::before { right: 72px; clip-path: polygon(0 0, 100% 0, calc(100% - 36px) 100%, 0 100%); }
+  .topbar { --tab-top: 16px; }
+  .topbar::after { width: 108px; }
   .brand img { height: 26px; }
   .header-meta { display: none; }
   .stepper .lbl { display: none; }
