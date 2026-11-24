@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#97144d" />
+    <title>Start-Up Social — RSVP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Axis Bank · Start-Up Social"><img src="assets/axis-bank-white.svg" alt="Axis Bank" /></a>
+      <span class="header-meta"><span data-event="date"></span> <span class="sep">/</span> <span data-event="city"></span></span>
+    </header>
+
+    <div class="shell">
+      <main class="layout">
+        <section class="flow">
+          <ol class="stepper" aria-label="Progress">
+            <li data-step-dot="1" class="is-active"><span class="num">1</span><span class="lbl">RSVP</span></li>
+            <li data-step-dot="2"><span class="num">2</span><span class="lbl">Frame</span></li>
+            <li data-step-dot="3"><span class="num">3</span><span class="lbl">Share</span></li>
+          </ol>
+
+          <!-- Step 1: RSVP -->
+          <section id="step-rsvp" class="step" aria-labelledby="t-rsvp">
+            <p class="eyebrow">You're invited</p>
+            <h1 id="t-rsvp">Save your <em>seat.</em></h1>
+            <p class="lede">An evening of ideas, innovation and ambition. Tell us you're coming and get your <strong>I Am Attending</strong> frame to share.</p>
+            <form id="rsvp-form" novalidate>
+              <div class="fields">
+                <label class="field"><span>Full name</span><input id="in-name" name="name" type="text" autocomplete="name" maxlength="40" placeholder="Sanket" required /></label>
+                <label class="field"><span>Company</span><input id="in-company" name="company" type="text" autocomplete="organization" maxlength="40" placeholder="SP Design" required /></label>
+              </div>
+              <fieldset class="choices">
+                <legend>Will you attend?</legend>
+                <div class="segmented">
+                  <label class="choice"><input type="radio" name="attending" value="yes" required /><span>Yes, I'll be there</span></label>
+                  <label class="choice"><input type="radio" name="attending" value="no" /><span>Can't make it</span></label>
+                </div>
+              </fieldset>
+              <p id="form-error" class="error" role="alert" hidden></p>
+              <button class="btn btn-primary" type="submit">Continue <span aria-hidden="true">→</span></button>
+            </form>
+          </section>
+
+          <!-- Declined -->
+          <section id="step-decline" class="step" aria-labelledby="t-decline" hidden>
+            <p class="eyebrow">Response saved</p>
+            <h1 id="t-decline">Next time, <em>then.</em></h1>
+            <p class="lede">Thanks for letting us know, <strong id="decline-name"></strong>. We'll keep a seat warm for the next one.</p>
+            <button class="link" type="button" data-go="rsvp">← Change my answer</button>
+          </section>
+
+          <!-- Step 2: Frame -->
+          <section id="step-frame" class="step" aria-labelledby="t-frame" hidden>
+            <p class="eyebrow">Your frame</p>
+            <h1 id="t-frame">You're <em>in.</em></h1>
+            <p class="lede">Thanks, <strong id="frame-name"></strong>. Here's your Start-Up Social frame. Let your network know you're attending.</p>
+            <div class="actions">
+              <button class="btn btn-primary" type="button" data-go="share">Continue <span aria-hidden="true">→</span></button>
+            </div>
+            <button class="link" type="button" data-go="rsvp">← Back</button>
+          </section>
+
+          <!-- Step 3: Share -->
+          <section id="step-share" class="step" aria-labelledby="t-share" hidden>
+            <p class="eyebrow">Share</p>
+            <h1 id="t-share">Spread the <em>word.</em></h1>
+            <p class="lede">Download your frame and post it. On LinkedIn: tap <strong>Post</strong>, add a photo, and pick the image you just saved.</p>
+            <div class="actions">
+              <button id="btn-download" class="btn btn-primary" type="button">Download frame <span aria-hidden="true">↓</span></button>
+              <button id="btn-linkedin" class="btn btn-ghost" type="button">LinkedIn <span aria-hidden="true">↗</span></button>
+            </div>
+            <button class="link" type="button" data-go="frame">← Back to your frame</button>
+          </section>
+        </section>
+
+        <aside class="side">
+          <section id="event-card" class="event-panel" aria-label="Event details">
+            <img class="event-logo" src="assets/startup-social-white.svg" alt="Start-Up Social" />
+            <div class="event-date">
+              <span class="day" data-event-part="day"></span>
+              <span class="month"><span data-event-part="month"></span><span data-event="city"></span></span>
+            </div>
+            <p class="event-line">Founders, investors and industry leaders shaping India's next wave of innovation.</p>
+            <div class="host"><span>Hosted by</span><img src="assets/axis-bank-white.svg" alt="Axis Bank" /></div>
+            <div class="circuit circuit-light" aria-hidden="true"></div>
+          </section>
+
+          <figure id="frame-card" class="frame-card" hidden>
+            <img src="assets/i-am-attending.jpg" width="1600" height="1600" alt="Start-Up Social by Axis Bank: I Am Attending. An evening of ideas, innovation and ambition." />
+          </figure>
+        </aside>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <div class="circuit" aria-hidden="true"></div>
+      <div class="footer-inner"><span><span data-event="name">Start-Up Social</span> · Axis Bank © 2026</span><span>Built for founders who show up.</span></div>
+    </footer>
+  </body>
+</html>
