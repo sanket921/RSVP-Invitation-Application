@@ -10,7 +10,6 @@
   --danger: #c0262d;
   --font: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --pad: clamp(20px, 5vw, 72px);
-  --notch: 64px;
 
   /* "circuit" motif from the frame: thin line with dots, pills and diamonds */
   --circuit: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='24'%3E%3Cpath d='M0 12H280' stroke='%23e4d9df' stroke-width='1'/%3E%3Ccircle cx='14' cy='12' r='2.5' fill='%2397144d'/%3E%3Ccircle cx='24' cy='12' r='2.5' fill='%23d6457f'/%3E%3Ccircle cx='34' cy='12' r='2.5' fill='%2397144d'/%3E%3Cpath d='M70 8h22l4 4-4 4H70z' fill='%2397144d'/%3E%3Ccircle cx='128' cy='12' r='2.5' fill='%2397144d'/%3E%3Cpath d='M160 7l5 5-5 5-5-5z' fill='%2397144d'/%3E%3Crect x='196' y='8' width='30' height='8' rx='4' fill='%2397144d'/%3E%3Ccircle cx='211' cy='12' r='2' fill='%23d6457f'/%3E%3Ccircle cx='254' cy='12' r='2.5' fill='%23d6457f'/%3E%3C/svg%3E");
@@ -52,7 +51,7 @@ button { cursor: pointer; }
 .topbar { --tab-top: 18px; background: var(--brand); overflow: hidden; }
 /* Light tab rising from the bottom right: rounded top corner, slanted edge, flared foot */
 .topbar::after {
-  content: ''; position: absolute; top: var(--tab-top); right: 0; bottom: 0; width: calc(clamp(150px, 28vw, 420px) + 52px);
+  content: ''; position: absolute; top: var(--tab-top); right: 0; bottom: 0; width: max(clamp(150px, 28vw, 420px) + 52px, var(--pad) + 345px); /* never narrower than the date text */
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='58' viewBox='0 0 600 58'%3E%3Cpath d='M0 58Q10 58 14 52L46 8Q51 0 62 0H600V58Z' fill='%23faf7f9'/%3E%3C/svg%3E") left bottom / auto 100% no-repeat;
 }
 .brand, .header-meta { position: relative; z-index: 1; }
@@ -127,7 +126,7 @@ button { cursor: pointer; }
 .side { position: relative; }
 .event-panel { /* 4:5 invitation card */
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,21 +147,20 @@ button { cursor: pointer; }
 .host { display: flex; flex-direction: column; align-items: center; gap: 20px; font-size: 14px; }
 .host img { height: 33px; width: auto; }
 .circuit { height: 24px; background: var(--circuit) repeat-x left center / auto 24px; }
-.event-panel .circuit { align-self: stretch; margin: 34px -32px 0; background-image: var(--circuit-light); }
+.event-panel .circuit { flex: none; align-self: stretch; margin: 34px -32px 0; background-image: var(--circuit-light); }
 
 /* ─── Frame (steps 2–3): the hero ─────────────────────────────────── */
 .frame-card { position: relative; isolation: isolate; margin: 0 22px 22px 0; animation: pop .55s cubic-bezier(.2, .9, .3, 1.15) both; }
-.frame-card::before { /* offset burgundy block behind, with the notch */
+.frame-card::before { /* offset burgundy block behind */
   content: ''; position: absolute; inset: 0; z-index: -1; transform: translate(22px, 22px);
   background: linear-gradient(150deg, var(--brand), var(--magenta));
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
 }
 .frame-card img { display: block; width: 100%; height: auto; box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 24px 48px -28px rgba(80, 10, 40, .5); }
+.frame-card::before, .frame-card img { border-radius: 4.63%; } /* 50px on 1080: hides the PNG's white corners */
 @keyframes pop { from { opacity: 0; transform: scale(.95); } }
-@media (min-width: 961px) { /* desktop: 4:5 card with rounded corners (40px on 1080×1350) */
+@media (min-width: 961px) { /* desktop: 4:5 card */
   .layout:has(#frame-card:not([hidden])) { grid-template-columns: minmax(0, 1fr) minmax(380px, 500px); }
-  .frame-card::before, .frame-card img { border-radius: 3.7% / 2.96%; }
-  .frame-card::before { clip-path: none; }
+  .frame-card::before, .frame-card img { border-radius: 4.63% / 3.7%; }
 }
 
 /* ─── Footer ──────────────────────────────────────────────────────── */
@@ -202,17 +200,17 @@ button { cursor: pointer; }
   #rsvp-form .btn { width: 100%; }
   /* Square event card, proportions from the 1080×1080 mobile design (cqw = 1% of card width) */
   .side { container-type: inline-size; }
-  .event-panel { aspect-ratio: 1; justify-content: center; padding: 5cqw 4.5cqw 3cqw; border-radius: 4.5cqw; }
+  .event-panel { aspect-ratio: 1; justify-content: center; padding: 5cqw 4.5cqw 2cqw; border-radius: 4.5cqw; }
   .event-logo { width: 43cqw; }
-  .event-tagline { margin-top: 4.5cqw; font-size: max(12px, 2.6cqw); }
-  .event-rule { width: 31.5cqw; margin: 4.5cqw auto; }
+  .event-tagline { margin-top: 3.4cqw; font-size: max(12px, 2.6cqw); }
+  .event-rule { width: 31.5cqw; margin: 3.4cqw auto; }
   .event-date { gap: 3.2cqw; }
   .event-date .day { padding-right: 3.2cqw; font-size: 15.5cqw; }
   .event-date .month { font-size: max(15px, 4.3cqw); }
-  .event-line { max-width: max(270px, 62cqw); margin-top: 4.5cqw; font-size: max(13px, 3.3cqw); line-height: 1.25; }
-  .host { gap: 4cqw; font-size: max(12px, 2.7cqw); }
+  .event-line { max-width: max(250px, 62cqw); margin-top: 3.4cqw; font-size: max(13px, 3.3cqw); line-height: 1.25; }
+  .host { gap: 2.6cqw; font-size: max(12px, 2.7cqw); }
   .host img { height: 6cqw; }
-  .event-panel .circuit { margin: 5cqw -4.5cqw 0; }
+  .event-panel .circuit { margin: 3cqw -4.5cqw 0; }
   .frame-card { margin: 0 14px 14px 0; }
-  .frame-card::before { transform: translate(14px, 14px); --notch: 40px; }
+  .frame-card::before { transform: translate(14px, 14px); }
 }
